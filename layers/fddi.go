@@ -7,8 +7,9 @@
 package layers
 
 import (
-	"github.com/google/gopacket"
 	"net"
+
+	"github.com/singchia/gopacket"
 )
 
 // FDDI contains the header for FDDI frames.
@@ -37,5 +38,5 @@ func decodeFDDI(data []byte, p gopacket.PacketBuilder) error {
 	}
 	p.SetLinkLayer(f)
 	p.AddLayer(f)
-	return p.NextDecoder(f.FrameControl)
+	return p.NextDecoder(f.FrameControl.LayerType())
 }

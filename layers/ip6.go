@@ -13,7 +13,7 @@ import (
 	"fmt"
 	"net"
 
-	"github.com/google/gopacket"
+	"github.com/singchia/gopacket"
 )
 
 const (
@@ -532,7 +532,7 @@ func decodeIPv6HopByHop(data []byte, p gopacket.PacketBuilder) error {
 	if err != nil {
 		return err
 	}
-	return p.NextDecoder(i.NextHeader)
+	return p.NextDecoder(i.NextHeader.LayerType())
 }
 
 // SetJumboLength adds the IPv6HopByHopOptionJumbogram with the given length
@@ -586,7 +586,7 @@ func decodeIPv6Routing(data []byte, p gopacket.PacketBuilder) error {
 		return fmt.Errorf("Unknown IPv6 routing header type %d", i.RoutingType)
 	}
 	p.AddLayer(i)
-	return p.NextDecoder(i.NextHeader)
+	return p.NextDecoder(i.NextHeader.LayerType())
 }
 
 // IPv6Fragment is the IPv6 fragment header, used for packet
@@ -662,7 +662,7 @@ func decodeIPv6Destination(data []byte, p gopacket.PacketBuilder) error {
 	if err != nil {
 		return err
 	}
-	return p.NextDecoder(i.NextHeader)
+	return p.NextDecoder(i.NextHeader.LayerType())
 }
 
 // SerializeTo writes the serialized form of this layer into the

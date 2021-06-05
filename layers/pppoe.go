@@ -8,7 +8,8 @@ package layers
 
 import (
 	"encoding/binary"
-	"github.com/google/gopacket"
+
+	"github.com/singchia/gopacket"
 )
 
 // PPPoE is the layer for PPPoE encapsulation headers.
@@ -37,7 +38,7 @@ func decodePPPoE(data []byte, p gopacket.PacketBuilder) error {
 	}
 	pppoe.BaseLayer = BaseLayer{data[:6], data[6 : 6+pppoe.Length]}
 	p.AddLayer(pppoe)
-	return p.NextDecoder(pppoe.Code)
+	return p.NextDecoder(pppoe.Code.LayerType())
 }
 
 // SerializeTo writes the serialized form of this layer into the
