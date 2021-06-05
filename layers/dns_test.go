@@ -12,7 +12,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/google/gopacket"
+	"github.com/singchia/gopacket"
 )
 
 // it have a layer like that:
