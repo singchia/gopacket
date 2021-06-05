@@ -9,6 +9,7 @@ package layers
 import (
 	"encoding/binary"
 	"errors"
+
 	"github.com/google/gopacket"
 )
 
@@ -50,7 +51,7 @@ func decodeIPSecAH(data []byte, p gopacket.PacketBuilder) error {
 	i.Contents = data[:i.ActualLength]
 	i.Payload = data[i.ActualLength:]
 	p.AddLayer(i)
-	return p.NextDecoder(i.NextHeader)
+	return p.NextDecoder(i.NextHeader.LayerType())
 }
 
 // IPSecESP is the encapsulating security payload defined in

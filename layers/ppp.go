@@ -9,6 +9,7 @@ package layers
 import (
 	"encoding/binary"
 	"errors"
+
 	"github.com/google/gopacket"
 )
 
@@ -56,7 +57,7 @@ func decodePPP(data []byte, p gopacket.PacketBuilder) error {
 	}
 	p.AddLayer(ppp)
 	p.SetLinkLayer(ppp)
-	return p.NextDecoder(ppp.PPPType)
+	return p.NextDecoder(ppp.PPPType.LayerType())
 }
 
 // SerializeTo writes the serialized form of this layer into the

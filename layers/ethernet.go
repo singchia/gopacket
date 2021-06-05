@@ -11,8 +11,9 @@ import (
 	"encoding/binary"
 	"errors"
 	"fmt"
-	"github.com/google/gopacket"
 	"net"
+
+	"github.com/google/gopacket"
 )
 
 // EthernetBroadcast is the broadcast MAC address used by Ethernet.
@@ -44,10 +45,12 @@ func (eth *Ethernet) DecodeFromBytes(data []byte, df gopacket.DecodeFeedback) er
 	}
 	eth.DstMAC = net.HardwareAddr(data[0:6])
 	eth.SrcMAC = net.HardwareAddr(data[6:12])
+	// IEEE802.3
 	eth.EthernetType = EthernetType(binary.BigEndian.Uint16(data[12:14]))
 	eth.BaseLayer = BaseLayer{data[:14], data[14:]}
 	eth.Length = 0
 	if eth.EthernetType < 0x0600 {
+		// IEEE802.2 llc
 		eth.Length = uint16(eth.EthernetType)
 		eth.EthernetType = EthernetTypeLLC
 		if cmp := len(eth.Payload) - int(eth.Length); cmp < 0 {
@@ -119,5 +122,5 @@ func decodeEthernet(data []byte, p gopacket.PacketBuilder) error {
 	}
 	p.AddLayer(eth)
 	p.SetLinkLayer(eth)
-	return p.NextDecoder(eth.EthernetType)
+	return p.NextDecoder(eth.EthernetType.LayerType())
 }

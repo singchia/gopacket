@@ -125,7 +125,7 @@ func decodeSNAP(data []byte, p gopacket.PacketBuilder) error {
 	// BUG(gconnell):  When decoding SNAP, we treat the SNAP type as an Ethernet
 	// type.  This may not actually be an ethernet type in all cases,
 	// depending on the organizational code.  Right now, we don't check.
-	return p.NextDecoder(s.Type)
+	return p.NextDecoder(s.Type.LayerType())
 }
 
 // SerializeTo writes the serialized form of this layer into the
