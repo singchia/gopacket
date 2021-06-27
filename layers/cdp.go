@@ -6,7 +6,7 @@
 
 // Enum types courtesy of...
 //   http://search.cpan.org/~mchapman/Net-CDP-0.09/lib/Net/CDP.pm
-//   https://code.google.com/p/ladvd/
+//   https://code.singchia.com/p/ladvd/
 //   http://anonsvn.wireshark.org/viewvc/releases/wireshark-1.8.6/epan/dissectors/packet-cdp.c
 
 package layers
